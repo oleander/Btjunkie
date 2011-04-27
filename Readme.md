@@ -12,23 +12,6 @@ Fetch torrents from the [video section](http://btjunkie.org/browse/Video?o=72&t=
 Btjunkie.movies
 ````
 
-### Most recent using step
-
-`Btjunkie.step` makes it possible to step through all pages.
-
-```` ruby
-Btjunkie.step.movies
-````
-
-If you for example want to fetch all torrents on all pages, then something like this might be useful.
-
-```` ruby
-bt = Btjunkie.step
-
-while bt.movies.any?
-  bt.movies # Do something with the data
-end
-````
 ### Specify a page
 
 ```` ruby

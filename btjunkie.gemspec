@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Linus Oleander"]
   s.email       = ["linus@oleander.nu"]
   s.homepage    = ""
-  s.summary     = %q{The Unofficial API for btjunkie.org}
-  s.description = %q{The Unofficial API for btjunkie.org.}
+  s.summary     = %q{The unofficial API for btjunkie.org}
+  s.description = %q{The unofficial API for btjunkie.org.}
 
   s.rubyforge_project = "btjunkie"
 

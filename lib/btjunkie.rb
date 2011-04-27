@@ -7,12 +7,12 @@ class Btjunkie
     tap { @page = page }
   end
   
-  def step
-    tap { @step = true }
+  def cookies(cookies)
+    tap { @cookies = cookies }
   end
   
   def movies
-    @page += 1 if @step
+    
   end
   
   def self.method_missing(meth, *args, &blk)

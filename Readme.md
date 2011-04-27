@@ -29,6 +29,13 @@ while bt.movies.any?
   bt.movies # Do something with the data
 end
 ````
+### Specify a page
+
+```` ruby
+Btjunkie.page(12).movies
+````
+
+Default is `1`.
 
 ### Cookies
 

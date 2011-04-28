@@ -24,4 +24,20 @@ describe Btjunkie do
       lambda { Btjunkie.category(:movies).torrents }.should raise_error(ArgumentError, "You need to specify a cookie using #cookies")
     end
   end
+  
+  describe "#torrents" do
+    describe "movies category" do
+      before(:each) do
+        stub_request(:get, "http://btjunkie.org/browse/Video?o=72&p=1&s=1&t=0").
+          to_return(:body => File.read("spec/fixtures/movies.html"))
+        @bt = Btjunkie.category(:movies).cookies({
+          id: "random"
+        })
+      end
+      
+      it "should return a list of 49 torrents" do
+        @bt.should have(49).torrents
+      end
+    end
+  end
 end

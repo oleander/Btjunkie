@@ -1,6 +1,6 @@
 # Btjunkie
 
-Unofficial API for [Btjunkie](http://btjunkie.org/)
+Unofficial API for [Btjunkie](http://btjunkie.org/).
 
 ## How to use
 

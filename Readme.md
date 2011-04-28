@@ -41,7 +41,6 @@ The `torrents` method returns a list of `Torrent` object with the following meth
 - **torrent**    (*String*) The url. This should be a direct link to the torrent.
 - **tid**        (*String*) The `tid` method, also known as `torrent id` is a *truly* unique identifier for all torrents. It is generated using a [MD5](http://sv.wikipedia.org/wiki/MD5) with the torrent domain and the `id` method as a seed.
 - **torrent_id** (*String*) The same as the `tid` method.
-- **open?**      (*Boolean*) Is the given tracker open?
 - **dead?**      (*Boolean*) Check to see if the torrent has no seeders. If it has no seeders, then `dead?` will be true.
 - **id**         (*Fixnum*) An unique id for the torrent. The id is only unique for this specific torrent, not all torrents.
 - **seeders**    (*Fixnum*) The amount of seeders.

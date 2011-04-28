@@ -9,7 +9,7 @@ Fetch torrents from the [video section](http://btjunkie.org/browse/Video?o=72&t=
 ### Most recent
 
 ```` ruby
-Btjunkie.movies
+Btjunkie.category(:movies)
 ````
 
 ### Specify a page

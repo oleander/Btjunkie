@@ -4,6 +4,9 @@ require "nokogiri"
 class Btjunkie  
   def initialize
     @page = 1
+    @categories = {
+      :movies => "http://btjunkie.org/browse/Video?o=72&t=0&p=<PAGE>"
+    }
   end
   
   def page(page)
@@ -14,8 +17,10 @@ class Btjunkie
     tap { @cookies = cookies }
   end
   
-  def movies
-    tap { @url = "http://btjunkie.org/browse/Video?o=72&t=0&p=<PAGE>" }
+  def category(what)
+    tap { 
+      @url = @categories[what]
+    }
   end
   
   def torrents

@@ -21,7 +21,7 @@ describe Btjunkie do
     end
     
     it "should raise an error if no cookies if being passed" do
-      lambda { Btjunkie.movies.torrents }.should raise_error(ArgumentError, "You need to specify a cookie using #cookies")
+      lambda { Btjunkie.category(:movies).torrents }.should raise_error(ArgumentError, "You need to specify a cookie using #cookies")
     end
   end
 end

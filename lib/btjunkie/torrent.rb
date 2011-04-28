@@ -1,4 +1,6 @@
 require "btjunkie/base"
+require "digest/md5"
+
 module BtjunkieContainer
   class Torrent
     attr_accessor :title, :torrent
@@ -32,13 +34,13 @@ module BtjunkieContainer
     
     # Generates an id using the details url
     def id
-      @id ||= inner_call(:id, details).to_i
+      @id ||= torrent.match(/(\w+)\/download\.torrent$/)[1]
     end
     
     # Returns the domain for the torrent, without http or www
     # If the domain for some reason isn't found, it will use an empty string
     def domain
-      @domain ||= details.match(/(ftp|http|https):\/\/([w]+\.)?(.+?\.[a-z]{2,3})/i).to_a[3] || ""
+      "http://btjunkie.org"
     end
     
     # Returns a unique id for the torrent based on the domain and the id of the torrent
@@ -87,7 +89,7 @@ module BtjunkieContainer
     end
     
     def details
-      "http://btjunkie.org#{@details}"
+      "#{domain}#{@details}"
     end
   end
 end

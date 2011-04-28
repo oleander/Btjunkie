@@ -40,6 +40,9 @@ describe Btjunkie do
       end
       
       it "should contain the right data" do
+        object = mock(Object.new)
+        object.should_receive(:based_on).exactly(49).times
+        
         @bt.torrents.each do |torrent|
           torrent.torrent.should match(/http:\/\/dl\.btjunkie\.org\/torrent\/.+?\/\w+\/download\.torrent/)
           torrent.title.should_not be_empty
@@ -52,6 +55,13 @@ describe Btjunkie do
           torrent.tid.should match(/[a-fA-F\d]{32}/)
           torrent.torrent_id.should eq(torrent.id)
           torrent.should be_open
+          MovieSearcher.should_receive(:find_by_release_name).with(torrent.title, options: {
+            :details => true
+          }).and_return(Struct.new(:imdb_id).new("123"))
+                    
+          Undertexter.should_receive(:find).with("123", language: :english).and_return(object)
+            
+          torrent.subtitle(:english)
         end
       end
     end

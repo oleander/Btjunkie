@@ -7,6 +7,7 @@ module BtjunkieContainer
     include BtjunkieContainer::Base
     
     def initialize(args)
+      @subtitle = {}
       args.keys.each { |name| instance_variable_set "@" + name.to_s, args[name] }
     end
     
@@ -74,18 +75,16 @@ module BtjunkieContainer
     # Read more about it here: https://github.com/oleander/MovieSearcher
     # Return type: A MovieSearcher object or nil
     def movie
-      not_implemented
-      # imdb_id.nil? ? MovieSearcher.find_by_release_name(title, options: {
-      #   details: true
-      # }) : MovieSearcher.find_movie_by_id(imdb_id)
+      @_movie ||= MovieSearcher.find_by_release_name(title, options: {
+        :details => true
+      })
     end
     
     # Returns a Undertexter object, if we found a imdb_id, otherwise nil
     # Read more about it here: https://github.com/oleander/Undertexter
     # Return type: A single Undertexter object or nil
     def subtitle(option = :english)
-      # @subtitle = {} unless @subtitle
-      # @subtitle[option] ||= Undertexter.find(imdb_id, language: option).based_on(title)
+      @subtitle[option] ||= Undertexter.find(movie.imdb_id, language: option).based_on(title)
     end
     
     def details

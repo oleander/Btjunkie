@@ -3,6 +3,8 @@ require "nokogiri"
 require "abstract"
 require "btjunkie/base"
 require "btjunkie/torrent"
+require "movie_searcher"
+require "undertexter"
 
 class Btjunkie
   include BtjunkieContainer::Base

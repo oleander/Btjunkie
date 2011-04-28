@@ -41,6 +41,11 @@ describe Btjunkie do
       
       it "should contain the right data" do
         @bt.torrents.each do |torrent|
+          torrent.torrent.should match(/http:\/\/dl\.btjunkie\.org\/torrent\/.+?\/\w+\/download\.torrent/)
+          torrent.title.should_not be_empty
+          torrent.details.should match(URI.regexp)
+          torrent.should_not be_dead
+          torrent.seeders.should be_instance_of(Fixnum)
           torrent.should be_instance_of(BtjunkieContainer::Torrent)
         end
       end

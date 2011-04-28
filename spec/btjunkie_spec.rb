@@ -17,15 +17,15 @@ describe Btjunkie do
   
   describe "errors" do
     it "should raise an error if no category if being defined" do
-      lambda { Btjunkie.torrents }.should raise_error(ArgumentError, "You need to specify a category")
+      lambda { Btjunkie.results }.should raise_error(ArgumentError, "You need to specify a category")
     end
     
     it "should raise an error if no cookies if being passed" do
-      lambda { Btjunkie.category(:movies).torrents }.should raise_error(ArgumentError, "You need to specify a cookie using #cookies")
+      lambda { Btjunkie.category(:movies).results }.should raise_error(ArgumentError, "You need to specify a cookie using #cookies")
     end
   end
   
-  describe "#torrents" do
+  describe "#results" do
     describe "movies category" do
       before(:each) do
         stub_request(:get, "http://btjunkie.org/browse/Video?o=72&p=1&s=1&t=1").
@@ -36,14 +36,14 @@ describe Btjunkie do
       end
       
       it "should return a list of 49 torrents" do
-        @bt.should have(49).torrents
+        @bt.should have(49).results
       end
       
       it "should contain the right data" do
         object = mock(Object.new)
         object.should_receive(:based_on).exactly(49).times
         
-        @bt.torrents.each do |torrent|
+        @bt.results.each do |torrent|
           torrent.torrent.should match(/http:\/\/dl\.btjunkie\.org\/torrent\/.+?\/\w+\/download\.torrent/)
           torrent.title.should_not be_empty
           torrent.details.should match(URI.regexp)

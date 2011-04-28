@@ -25,7 +25,7 @@ class Btjunkie
     tap { @url = @categories[what] }
   end
   
-  def torrents
+  def results
     @_torrents ||= scrape
   end
   

@@ -33,8 +33,8 @@ Btjunkie.cookies({
 
 ## Data to work with
 
-As soon as the `torrents` method is applied to the query a request to *Btjunkie* is made.
-The `torrents` method returns a list of `Torrent` object with the following methods.
+As soon as the `results` method is applied to the query a request to *Btjunkie* is made.
+The `results` method returns a list of `Torrent` object with the following methods.
 
 - **title**      (*String*) The title.
 - **details**    (*String*) The url to the details page.
@@ -48,7 +48,7 @@ The `torrents` method returns a list of `Torrent` object with the following meth
 - **movie**      (*[MovieSearcher](https://github.com/oleander/MovieSearcher)*) Read more about the returned object at the [MovieSearcher](https://github.com/oleander/MovieSearcher) project page.
 
 ```` ruby
-torrents = Btjunkie.movies.torrents
+torrents = Btjunkie.category(:movies).results
 puts torrents.class       # => Array
 puts torrents.first.class # => BtjunkieContainer::Torrent
 ````

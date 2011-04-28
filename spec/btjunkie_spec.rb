@@ -38,6 +38,14 @@ describe Btjunkie do
       it "should return a list of 49 torrents" do
         @bt.should have(49).torrents
       end
+      
+      it "should contain the right data" do
+        @bt.torrents.each do |torrent|
+          torrent.should be_instance_of(BtjunkieContainer::Torrent)
+        end
+      end
     end
   end
+  
+  
 end

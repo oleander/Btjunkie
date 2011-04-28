@@ -1,7 +1,12 @@
 require "rest-client"
 require "nokogiri"
+require "abstract"
+require "btjunkie/base"
+require "btjunkie/torrent"
 
-class Btjunkie  
+class Btjunkie
+  include BtjunkieContainer::Base
+  
   def initialize
     @page = 1
     @categories = {
@@ -31,35 +36,27 @@ class Btjunkie
   
   private
     def scrape
-      content.css("table.tab_results tr").reject do |tr| 
-        tr.at_css("th.label").nil? or
-        tr.at_css("font[color='#32CD32']").nil?
-      end.map do |tr|
-        a = tr.css("a")
-        {
-          torrent: a[0].attr("href"),
-          details: a[2].attr("href"),
-          title: a[2].content,
-          seeders: tr.at_css("font[color='#32CD32']").text
-        }
-      end
-    end
-    
-    def content
-      @_content ||= Nokogiri::HTML(download)
-    end
-  
-    def url
-      @_url ||= @url.gsub("<PAGE>", @page.to_s)
-    end
-    
-    def download
       if @url.nil?
         raise ArgumentError.new "You need to specify a category"
       elsif @cookies.nil?
         raise ArgumentError.new "You need to specify a cookie using #cookies"
       end
-      
-      @_download ||= RestClient.get(url, :timeout => 10)
+        
+      content.css("table.tab_results tr").reject do |tr| 
+        tr.at_css("th.label").nil? or
+        tr.at_css("font[color='#32CD32']").nil?
+      end.map do |tr|
+        a = tr.css("a"); 
+        BtjunkieContainer::Torrent.new({
+          :torrent => a[0].attr("href"),
+          :details => a[2].attr("href"),
+          :title   => a[2].content,
+          :seeders => tr.at_css("font[color='#32CD32']").text
+        })
+      end
+    end
+  
+    def url
+      @_url ||= @url.gsub("<PAGE>", @page.to_s)
     end
 end

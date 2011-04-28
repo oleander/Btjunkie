@@ -28,7 +28,7 @@ describe Btjunkie do
   describe "#torrents" do
     describe "movies category" do
       before(:each) do
-        stub_request(:get, "http://btjunkie.org/browse/Video?o=72&p=1&s=1&t=0").
+        stub_request(:get, "http://btjunkie.org/browse/Video?o=72&p=1&s=1&t=1").
           to_return(:body => File.read("spec/fixtures/movies.html"))
         @bt = Btjunkie.category(:movies).cookies({
           id: "random"
@@ -54,7 +54,7 @@ describe Btjunkie do
           torrent.id.should match(/[a-z0-9]+/)
           torrent.tid.should match(/[a-fA-F\d]{32}/)
           torrent.torrent_id.should eq(torrent.id)
-          torrent.should be_open
+          
           MovieSearcher.should_receive(:find_by_release_name).with(torrent.title, options: {
             :details => true
           }).and_return(Struct.new(:imdb_id).new("123"))
@@ -66,6 +66,4 @@ describe Btjunkie do
       end
     end
   end
-  
-  
 end

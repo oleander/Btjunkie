@@ -1,18 +1,15 @@
 require "rest-client"
 require "nokogiri"
 require "abstract"
-require "btjunkie/base"
 require "btjunkie/torrent"
 require "movie_searcher"
 require "undertexter"
 
-class Btjunkie
-  include BtjunkieContainer::Base
-  
+class Btjunkie  
   def initialize
     @page = 1
     @categories = {
-      :movies => "http://btjunkie.org/browse/Video?o=72&t=0&s=1&p=<PAGE>"
+      :movies => "http://btjunkie.org/browse/Video?o=72&t=1&s=1&p=<PAGE>"
     }
   end
   
@@ -60,5 +57,13 @@ class Btjunkie
   
     def url
       @_url ||= @url.gsub("<PAGE>", @page.to_s)
+    end
+    
+    def download
+      @_download ||= RestClient.get(url, :timeout => 10)
+    end
+
+    def content
+      @_content ||= Nokogiri::HTML(download)
     end
 end

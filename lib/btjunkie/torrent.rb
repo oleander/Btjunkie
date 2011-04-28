@@ -1,11 +1,8 @@
-require "btjunkie/base"
 require "digest/md5"
 
 module BtjunkieContainer
   class Torrent
-    attr_accessor :title, :torrent
-    include BtjunkieContainer::Base
-    
+    attr_accessor :title, :torrent    
     def initialize(args)
       @subtitle = {}
       args.keys.each { |name| instance_variable_set "@" + name.to_s, args[name] }
@@ -20,17 +17,6 @@ module BtjunkieContainer
     
     def seeders
       @_seeders ||= @seeders.to_i
-    end
-    
-    # Check to see if the ingoing param is a valid url or not
-    def valid_url?(url)
-      !! url.match(URI.regexp)
-    end
-    
-    # Check to see if the ingoing param is a valid torrent url or not
-    # The url has to be a valid url and has to end with .torrent
-    def valid_torrent?(torrent)
-      torrent.match(/\.torrent$/) and valid_url?(torrent)
     end
     
     # Generates an id using the details url
@@ -54,23 +40,6 @@ module BtjunkieContainer
       @torrent_id ||= tid
     end
     
-    # Returns the full url to the related imdb page
-    # The link is parsed from the details view
-    # Example: http://www.imdb.com/title/tt0066026
-    # Return type: String or nil
-    def imdb
-      not_implemented
-      # @imdb ||= content.to_s.match(/((http:\/\/)?([w]{3}\.)?imdb.com\/title\/tt\d+)/i).to_a[1]
-    end
-    
-    # Returns the imdb id for the torrent, including the tt at the beginning
-    # Example: tt0066026
-    # Return type: String or nil
-    def imdb_id
-      not_implemented
-      # @imdb_id ||= imdb.to_s.match(/(tt\d+)/).to_a[1]
-    end
-    
     # Returns an movie_searcher object based on the imdb_id, if it exists, otherwise the torrent title
     # Read more about it here: https://github.com/oleander/MovieSearcher
     # Return type: A MovieSearcher object or nil
@@ -89,10 +58,6 @@ module BtjunkieContainer
     
     def details
       "http://#{domain}#{@details}"
-    end
-    
-    def open?
-      domain == "btjunkie.org"
     end
     
     alias_method :torrent_id, :id

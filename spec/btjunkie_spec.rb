@@ -47,9 +47,11 @@ describe Btjunkie do
           torrent.should_not be_dead
           torrent.seeders.should be_instance_of(Fixnum)
           torrent.should be_instance_of(BtjunkieContainer::Torrent)
-          torrent.domain.should match(/btjunkie\.org/)
+          torrent.domain.should eq("btjunkie.org")
           torrent.id.should match(/[a-z0-9]+/)
           torrent.tid.should match(/[a-fA-F\d]{32}/)
+          torrent.torrent_id.should eq(torrent.id)
+          torrent.should be_open
         end
       end
     end

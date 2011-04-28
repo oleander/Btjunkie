@@ -40,7 +40,7 @@ module BtjunkieContainer
     # Returns the domain for the torrent, without http or www
     # If the domain for some reason isn't found, it will use an empty string
     def domain
-      "http://btjunkie.org"
+      "btjunkie.org"
     end
     
     # Returns a unique id for the torrent based on the domain and the id of the torrent
@@ -89,7 +89,13 @@ module BtjunkieContainer
     end
     
     def details
-      "#{domain}#{@details}"
+      "http://#{domain}#{@details}"
     end
+    
+    def open?
+      domain == "btjunkie.org"
+    end
+    
+    alias_method :torrent_id, :id
   end
 end

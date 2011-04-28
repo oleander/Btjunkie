@@ -15,7 +15,7 @@ Btjunkie.category(:movies)
 ### Specify a page
 
 ```` ruby
-Btjunkie.page(12).movies
+Btjunkie.page(12).category(:movies)
 ````
 
 Default is `1`.

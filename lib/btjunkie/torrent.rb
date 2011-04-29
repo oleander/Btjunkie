@@ -60,6 +60,10 @@ module BtjunkieContainer
       "http://#{domain}#{@details}"
     end
     
+    def imdb_id
+       movie.imdb_id
+    end
+    
     alias_method :torrent_id, :id
   end
 end

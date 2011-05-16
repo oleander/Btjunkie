@@ -1,6 +1,11 @@
 require "spec_helper"
 
 describe Btjunkie do
+  before(:each) do
+    @cookies = {
+      :sessid => "6b9d6fac8b5c66756b4f532c175748c8"
+    }
+  end
   describe "#page" do
     it "should be possible pass a page" do
       Btjunkie.page(10).should be_instance_of(Btjunkie)
@@ -16,35 +21,38 @@ describe Btjunkie do
   end
   
   describe "errors" do
-    it "should raise an error if no category if being defined" do
-      lambda { Btjunkie.results }.should raise_error(ArgumentError, "You need to specify a category")
+    it "should raise an error if no category if being defined" do      
+      lambda { 
+        Btjunkie.results
+      }.should raise_error(ArgumentError, "You need to specify a category")
     end
     
     it "should raise an error if no cookies if being passed" do
-      lambda { Btjunkie.category(:movies).results }.should raise_error(ArgumentError, "You need to specify a cookie using #cookies")
+      lambda { 
+        Btjunkie.category(:movies).results 
+      }.should raise_error(ArgumentError, "You need to specify a cookie using #cookies")
     end
   end
   
   describe "#results" do
     describe "movies category" do
+      use_vcr_cassette "movies"
       before(:each) do
-        stub_request(:get, "http://btjunkie.org/browse/Video?o=72&p=1&s=1&t=1").
-          to_return(:body => File.read("spec/fixtures/movies.html"))
-        @bt = Btjunkie.category(:movies).cookies({
-          id: "random"
-        })
+        @bt = Btjunkie.category(:movies).cookies(@cookies)
       end
       
-      it "should return a list of 49 torrents" do
-        @bt.should have(49).results
+      it "should return a list of 40 torrents" do
+        @bt.should have_at_least(40).results
       end
       
       it "should contain the right data" do
         object = mock(Object.new)
-        object.should_receive(:based_on).exactly(49).times
+        object.should_receive(:based_on).at_least(40).times
         
         @bt.results.each do |torrent|
-          torrent.torrent.should match(/http:\/\/dl\.btjunkie\.org\/torrent\/.+?\/\w+\/download\.torrent/)
+          torrent.torrent.should match(URI.regexp)
+          torrent.torrent.should match(/\.torrent$/)
+          torrent.torrent.should match(/^http:\/\//)
           torrent.title.should_not be_empty
           torrent.details.should match(URI.regexp)
           torrent.should_not be_dead

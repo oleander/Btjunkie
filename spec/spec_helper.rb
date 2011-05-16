@@ -2,8 +2,7 @@ require "rspec"
 require "webmock/rspec"
 require "btjunkie"
 require "vcr"
-
-WebMock.disable_net_connect!
+require "uri"
 
 RSpec.configure do |config|
   config.mock_with :rspec

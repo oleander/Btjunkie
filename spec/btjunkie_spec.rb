@@ -16,7 +16,7 @@ describe Btjunkie do
   describe "#cookies" do
     it "should be possible pass a page" do
       Btjunkie.cookies({
-        random: "random"
+        :random => "random"
       }).should be_instance_of(Btjunkie)
     end
   end
@@ -64,11 +64,11 @@ describe Btjunkie do
           torrent.tid.should match(/[a-fA-F\d]{32}/)
           torrent.torrent_id.should eq(torrent.id)
           torrent.should be_valid
-          MovieSearcher.should_receive(:find_by_release_name).with(torrent.title, options: {
+          MovieSearcher.should_receive(:find_by_release_name).with(torrent.title, :options => {
             :details => true
           }).and_return(Struct.new(:imdb_id).new("123"))
                     
-          Undertexter.should_receive(:find).with("123", language: :english).and_return(object)
+          Undertexter.should_receive(:find).with("123", :language => :english).and_return(object)
             
           torrent.subtitle(:english)
         end

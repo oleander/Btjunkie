@@ -62,7 +62,7 @@ describe Btjunkie do
           torrent.id.should match(/[a-z0-9]+/)
           torrent.tid.should match(/[a-fA-F\d]{32}/)
           torrent.torrent_id.should eq(torrent.id)
-          
+          torrent.should be_valid
           MovieSearcher.should_receive(:find_by_release_name).with(torrent.title, options: {
             :details => true
           }).and_return(Struct.new(:imdb_id).new("123"))
@@ -76,13 +76,24 @@ describe Btjunkie do
   end
   
   describe "bugs" do
-    it "should not raise an error calling the Btjunkie#tid method" do
-      bt = Btjunkie.category(:movies).cookies(@cookies)
-      bt.should_receive(:url).and_return("http://btjunkie.org/search?q=Limitless-2011-TS-XviD-IMAGiNE-torrentzilla-org")
-      VCR.use_cassette("bug1") do
+    describe "bug 1" do
+      use_vcr_cassette "bug1"
+      
+      before(:each) do
+        @bt = Btjunkie.category(:movies).cookies(@cookies)
+        @bt.should_receive(:url).and_return("http://btjunkie.org/search?q=Limitless-2011-TS-XviD-IMAGiNE-torrentzilla-org")
+      end
+      
+      it "should not raise an error calling the Btjunkie#tid method" do
         lambda { 
-          bt.results.first.tid
+          @bt.results.first.tid
         }.should_not raise_error
+      end
+      
+      it "should not be valid" do
+        @bt.results.each do |torrent|
+          torrent.should_not be_valid
+        end
       end
     end
   end

@@ -63,6 +63,11 @@ module BtjunkieContainer
       @_details ||= "http://#{domain}#{@details}"
     end
     
+    # The torrent is only valid if it has an id
+    def valid?
+      ! id.nil?
+    end
+    
     def imdb_id; nil; end
     
     alias_method :torrent_id, :id

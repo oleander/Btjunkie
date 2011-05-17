@@ -65,7 +65,9 @@ module BtjunkieContainer
     
     # The torrent is only valid if it has an id
     def valid?
-      ! id.nil?
+      ! id.nil? and 
+      @seeders.match(/^\d+$/) and not 
+      @title.to_s.empty?
     end
     
     def imdb_id; nil; end

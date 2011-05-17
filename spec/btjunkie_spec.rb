@@ -6,6 +6,7 @@ describe Btjunkie do
       :sessid => "6b9d6fac8b5c66756b4f532c175748c8"
     }
   end
+  
   describe "#page" do
     it "should be possible pass a page" do
       Btjunkie.page(10).should be_instance_of(Btjunkie)

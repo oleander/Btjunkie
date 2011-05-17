@@ -46,6 +46,7 @@ The `results` method returns a list of `Torrent` object with the following metho
 - **seeders**    (*Fixnum*) The amount of seeders.
 - **subtitle**   (*[Undertexter](https://github.com/oleander/Undertexter)*) The subtitle for the torrent. Takes one argument, the language for the subtitle. Default is `:english`. Read more about it [here](https://github.com/oleander/Undertexter).
 - **movie**      (*[MovieSearcher](https://github.com/oleander/MovieSearcher)*) Read more about the returned object at the [MovieSearcher](https://github.com/oleander/MovieSearcher) project page.
+- **valid?**     (*Boolean*) Is the torrent valid? Does it contain the correct value for #id, #torrent and #details?
 
 ```` ruby
 torrents = Btjunkie.category(:movies).results

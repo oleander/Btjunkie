@@ -74,4 +74,16 @@ describe Btjunkie do
       end
     end
   end
+  
+  describe "bugs" do
+    it "should not raise an error calling the Btjunkie#tid method" do
+      bt = Btjunkie.category(:movies).cookies(@cookies)
+      bt.should_receive(:url).and_return("http://btjunkie.org/search?q=Limitless-2011-TS-XviD-IMAGiNE-torrentzilla-org")
+      VCR.use_cassette("bug1") do
+        lambda { 
+          bt.results.first.tid
+        }.should_not raise_error
+      end
+    end
+  end
 end

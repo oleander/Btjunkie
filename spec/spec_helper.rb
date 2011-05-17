@@ -3,6 +3,7 @@ require "webmock/rspec"
 require "btjunkie"
 require "vcr"
 require "uri"
+require "./lib/btjunkie/torrent"
 
 RSpec.configure do |config|
   config.mock_with :rspec

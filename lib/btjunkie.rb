@@ -35,10 +35,17 @@ class Btjunkie
   
   def find_by_details(url)
     doc = content(url)
+    
+    if title = doc.at_css(".Wht font")
+      title = title.content.strip
+    else
+      title = ""
+    end
+    
     BtjunkieContainer::Torrent.new({
       :torrent => doc.to_s.match(/(http.+?\.torrent)/i).to_a[1],
       :details => url.to_s.gsub("http://btjunkie.org", ""),
-      :title   => doc.at_css(".Wht font").content.strip,
+      :title   => title,
       :seeders => doc.at_css("#main").to_s.match(/([^>][\d,]+) seeds/).to_a[1].to_s.gsub(/[^\d]+/, "")
     })
   end

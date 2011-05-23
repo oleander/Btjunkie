@@ -21,7 +21,7 @@ module BtjunkieContainer
     
     # Generates an id using the details url
     def id
-      @_id ||= torrent.match(/(\w+)\/download\.torrent$/).to_a[1]
+      @_id ||= torrent.to_s.match(/(\w+)\/download\.torrent$/).to_a[1]
     end
     
     # Returns the domain for the torrent, without http or www

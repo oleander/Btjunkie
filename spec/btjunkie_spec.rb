@@ -98,4 +98,32 @@ describe Btjunkie do
       end
     end
   end
+  
+  describe "#find_by_details" do
+    use_vcr_cassette "find_by_details"
+    before(:each) do
+      @url = "http://btjunkie.org/torrent/Pirates-of-the-Caribbean-4-2011-XViD-MEM-ENG-AUDIO/3952ef0859f08bbc7b63c97c51bd9a02e154e0c38026"
+      @torrent = Btjunkie.cookies(@cookies).find_by_details(@url)
+    end
+    
+    it "should have a torrent url" do
+      @torrent.torrent.should eq("http://dl.btjunkie.org/torrent/Pirates-of-the-Caribbean-4-2011-XViD-MEM-ENG-AUDIO/3952ef0859f08bbc7b63c97c51bd9a02e154e0c38026/download.torrent")
+    end
+    
+    it "should have some seeders" do
+      @torrent.seeders.should eq(62152)
+    end
+    
+    it "should have some seeders" do
+      @torrent.details.should eq(@url)
+    end
+    
+    it "should have a title" do
+      @torrent.title.should eq("Pirates of the Caribbean 4 2011 XViD- MEM [ENG AUDIO]")
+    end
+    
+    it "should be valid" do
+      @torrent.should be_valid
+    end
+  end
 end

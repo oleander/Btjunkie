@@ -33,6 +33,16 @@ class Btjunkie
     Btjunkie.new.send(meth, *args, &blk)
   end
   
+  def find_by_details(url)
+    doc = content(url)
+    BtjunkieContainer::Torrent.new({
+      :torrent => doc.to_s.match(/(http.+?\.torrent)/i).to_a[1],
+      :details => url.to_s.gsub("http://btjunkie.org", ""),
+      :title   => doc.at_css(".Wht font").content.strip,
+      :seeders => doc.at_css("#main").to_s.match(/([^>][\d,]+) seeds/).to_a[1].to_s.gsub(/[^\d]+/, "")
+    })
+  end
+  
   private
     def scrape
       if @url.nil?
@@ -41,7 +51,7 @@ class Btjunkie
         raise ArgumentError.new "You need to specify a cookie using #cookies"
       end
         
-      content.css("table.tab_results tr").reject do |tr| 
+      content(url).css("table.tab_results tr").reject do |tr| 
         tr.at_css("th.label").nil? or
         tr.at_css("font[color='#32CD32']").nil?
       end.map do |tr|
@@ -59,11 +69,11 @@ class Btjunkie
       @_url ||= @url.gsub("<PAGE>", @page.to_s)
     end
     
-    def download
+    def download(url)
       @_download ||= RestClient.get(url, :timeout => 10)
     end
 
-    def content
-      @_content ||= Nokogiri::HTML(download)
+    def content(url)
+      @_content ||= Nokogiri::HTML(download(url))
     end
 end

@@ -74,6 +74,22 @@ describe Btjunkie do
         end
       end
     end
+    
+    describe "empty request" do
+      before(:each) do
+        stub_request(:get, "http://btjunkie.org/browse/Video?o=72&p=10&s=1&t=1").to_return(:body => "")
+      end
+      
+      it "should no raise an error" do
+        lambda { 
+          Btjunkie.category(:movies).cookies(@cookies).page(10).results
+        }.should_not raise_error
+      end
+      
+      it "should not contain any torrents" do
+        Btjunkie.category(:movies).cookies(@cookies).page(10).results.count.should be_zero
+      end
+    end
   end
   
   describe "bugs" do

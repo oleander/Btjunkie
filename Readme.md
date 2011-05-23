@@ -30,6 +30,16 @@ Btjunkie.cookies({
   sessid: "1212lksdjfkj3lkeda090w83922af6b"
 })
 ````
+### Get info about a url
+
+You can easily get detailed info about a torrent using the `find_by_details` method.
+
+```` ruby
+url = "http://btjunkie.org/torrent/Pirates-of-the-Caribbean-4-2011-XViD-MEM-ENG-AUDIO/3952ef0859f08bbc7b63c97c51bd9a02e154e0c38026"
+torrent = Btjunkie.find_by_details(url)
+torrent.title # => Pirates of the Caribbean 4 2011 XViD- MEM [ENG AUDIO]
+````
+The `find_by_details` method returns a `Torrent` object.
 
 ## Data to work with
 

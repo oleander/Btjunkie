@@ -33,9 +33,6 @@ module BtjunkieContainer
     # Returns a unique id for the torrent based on the domain and the id of the torrent
     def tid
       @_tid ||= Digest::MD5.hexdigest("#{domain}#{id}")
-    # rescue => error
-      # puts 
-      # raise "Details: #{details} #{error}"
     end
     
     # Just a mirror method for {tid}, just in case someone don't like the method name tid

@@ -3,11 +3,11 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "btjunkie"
-  s.version     = "0.0.2"
+  s.version     = "0.0.3"
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Linus Oleander"]
   s.email       = ["linus@oleander.nu"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/oleander/Btjunkie"
   s.summary     = %q{The unofficial API for btjunkie.org}
   s.description = %q{The unofficial API for btjunkie.org.}
 
